@@ -1,0 +1,7 @@
+# Nubia configuration options
+
+config BOARD_NUBIA
+	bool "Nubia device"
+	depends on ARCH_QCOM
+	help
+	  Support for Nubia products
