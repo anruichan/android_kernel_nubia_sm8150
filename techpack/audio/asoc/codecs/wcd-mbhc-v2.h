@@ -141,10 +141,18 @@ do {                                                    \
 #define HS_DETECT_PLUG_TIME_MS (3 * 1000)
 #define SPECIAL_HS_DETECT_TIME_MS (2 * 1000)
 #define MBHC_BUTTON_PRESS_THRESHOLD_MIN 250
+#ifdef CONFIG_BOARD_NUBIA
+#define GND_MIC_SWAP_THRESHOLD 2
+#else
 #define GND_MIC_SWAP_THRESHOLD 4
+#endif
 #define GND_MIC_USBC_SWAP_THRESHOLD 2
 #define WCD_FAKE_REMOVAL_MIN_PERIOD_MS 100
+#ifdef CONFIG_ZTEMT_AUDIO
+#define HS_VREF_MIN_VAL 1300
+#else
 #define HS_VREF_MIN_VAL 1400
+#endif
 #define FW_READ_ATTEMPTS 15
 #define FW_READ_TIMEOUT 4000000
 #define FAKE_REM_RETRY_ATTEMPTS 3

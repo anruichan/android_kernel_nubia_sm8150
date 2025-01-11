@@ -22608,6 +22608,9 @@ static const struct snd_soc_dapm_route intercon[] = {
 	{"SLIMBUS_0_RX Port Mixer", "QUAT_MI2S_TX", "QUAT_MI2S_TX"},
 	{"SLIMBUS_0_RX Port Mixer", "QUIN_MI2S_TX", "QUIN_MI2S_TX"},
 	{"SLIMBUS_0_RX Port Mixer", "INTERNAL_BT_SCO_TX", "INT_BT_SCO_TX"},
+#ifdef CONFIG_BOARD_NUBIA
+	{"SLIMBUS_0_RX Port Mixer", "QUAT_MI2S_RX", "QUAT_MI2S_RX"},
+#endif
 	{"SLIMBUS_0_RX", NULL, "SLIMBUS_0_RX Port Mixer"},
 	{"AFE_PCM_RX Port Mixer", "INTERNAL_FM_TX", "INT_FM_TX"},
 	{"AFE_PCM_RX Port Mixer", "SLIM_1_TX", "SLIMBUS_1_TX"},
@@ -23752,6 +23755,12 @@ static int msm_routing_probe(struct snd_soc_platform *platform)
 	snd_soc_dapm_add_routes(&platform->component.dapm, intercon,
 		ARRAY_SIZE(intercon));
 
+#ifdef CONFIG_BOARD_NUBIA
+	// added by nubia, begin
+	printk("ignore BE_OUT");
+	snd_soc_dapm_ignore_suspend(&platform->component.dapm, "BE_OUT");
+	// added by nubia, end
+#endif
 	snd_soc_dapm_new_widgets(platform->component.dapm.card);
 
 	snd_soc_add_platform_controls(platform, lsm_controls,

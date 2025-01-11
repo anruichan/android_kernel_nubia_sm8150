@@ -9,6 +9,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+#ifdef CONFIG_BOARD_NUBIA
+#define DEBUG
+#endif
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/slab.h>
@@ -33,7 +36,11 @@
 
 #define WCD_MBHC_ADC_HS_THRESHOLD_MV    1700
 #define WCD_MBHC_ADC_HPH_THRESHOLD_MV   75
+#ifdef CONFIG_BOARD_NUBIA
+#define WCD_MBHC_ADC_MICBIAS_MV         2701
+#else
 #define WCD_MBHC_ADC_MICBIAS_MV         1800
+#endif
 #define WCD_MBHC_FAKE_INS_RETRY         4
 
 static int wcd_mbhc_get_micbias(struct wcd_mbhc *mbhc)
