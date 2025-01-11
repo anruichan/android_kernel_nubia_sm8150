@@ -55,12 +55,12 @@ COMMON_INC :=	-I$(AUDIO_ROOT)/$(COMMON_DIR)
 ############ TFA9894 ############
 
 # for TFA9894 driver
-#ifdef CONFIG_SND_SOC_TFA9894
+ifdef CONFIG_SND_SOC_TFA9894
 	TFA9894_OBJS += tfa_container.o
 	TFA9894_OBJS += tfa_dsp.o
 	TFA9894_OBJS += tfa_init.o
 	TFA9894_OBJS += tfa98xx.o
-#endif
+endif
 
 LINUX_INC +=	-Iinclude/linux
 
@@ -104,8 +104,7 @@ KBUILD_EXTRA_SYMBOLS +=$(OUT)/obj/vendor/qcom/opensource/audio-kernel/soc/Module
 endif
 
 # Module information used by KBuild framework
-#obj-$(CONFIG_SND_SOC_TFA9894) += tfa9894_dlkm.o
-obj-m += tfa9894_dlkm.o
+obj-$(CONFIG_SND_SOC_TFA9894) += tfa9894_dlkm.o
 tfa9894_dlkm-y := $(TFA9894_OBJS)
 
 # inject some build related information
