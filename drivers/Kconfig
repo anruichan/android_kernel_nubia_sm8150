@@ -221,4 +221,6 @@ source "drivers/esoc/Kconfig"
 
 source "drivers/fan/Kconfig"
 
+source "drivers/hwmon/nubia_sensors/double_sensors/Kconfig"
+
 endmenu
