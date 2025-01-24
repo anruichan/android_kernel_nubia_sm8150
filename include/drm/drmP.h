@@ -136,6 +136,9 @@ struct pci_controller;
 #define DRM_UT_ATOMIC		0x10
 #define DRM_UT_VBL		0x20
 #define DRM_UT_STATE		0x40
+#ifdef CONFIG_BOARD_NUBIA
+#define DRM_UT_NUBIA		0x80
+#endif
 
 /***********************************************************************/
 /** \name DRM template customization defaults */
@@ -214,6 +217,10 @@ struct pci_controller;
  * \param fmt printf() like format string.
  * \param arg arguments
  */
+#ifdef CONFIG_BOARD_NUBIA
+#define DRM_NUBIA_DEBUG(fmt, ...)				\
+	drm_printk(KERN_DEBUG, DRM_UT_NUBIA, fmt, ##__VA_ARGS__)
+#endif
 #define DRM_DEV_DEBUG(dev, fmt, args...)				\
 	drm_dev_printk(dev, KERN_DEBUG, DRM_UT_CORE, __func__, "", fmt,	\
 		       ##args)
