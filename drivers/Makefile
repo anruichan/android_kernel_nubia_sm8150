@@ -189,3 +189,4 @@ obj-$(CONFIG_MULTIPLEXER)	+= mux/
 obj-$(CONFIG_SENSORS_SSC)	+= sensors/
 obj-$(CONFIG_ESOC)              += esoc/
 obj-$(CONFIG_FAN)	+= fan/
+obj-$(CONFIG_NUBIA_DRIVERS)	+= nubia/
