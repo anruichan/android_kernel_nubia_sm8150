@@ -3128,8 +3128,19 @@ static ext4_group_t ext4_has_uninit_itable(struct super_block *sb)
 		if (!gdp)
 			continue;
 
+#ifdef CONFIG_BOARD_NUBIA
+		if (gdp->bg_flags & cpu_to_le16(EXT4_BG_INODE_ZEROED))
+			continue;
+		if (group != 0)
+			break;
+		ext4_error(sb,"Inode table for bg 0 marked as "
+			   "needing zeroing");
+		if (sb_rdonly(sb))
+			return ngroups;
+#else
 		if (!(gdp->bg_flags & cpu_to_le16(EXT4_BG_INODE_ZEROED)))
 			break;
+#endif
 	}
 
 	return group;
