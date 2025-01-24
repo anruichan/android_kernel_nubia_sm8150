@@ -29,8 +29,13 @@
 #include <soc/qcom/scm.h>
 #include <soc/qcom/qseecomi.h>
 
+#ifdef CONFIG_BOARD_NUBIA
+/* QSEE_LOG_BUF_SIZE = 256K */
+#define QSEE_LOG_BUF_SIZE 0x40000
+#else
 /* QSEE_LOG_BUF_SIZE = 32K */
 #define QSEE_LOG_BUF_SIZE 0x8000
+#endif
 
 
 /* TZ Diagnostic Area legacy version number */
