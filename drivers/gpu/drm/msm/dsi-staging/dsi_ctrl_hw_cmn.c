@@ -427,7 +427,11 @@ void dsi_ctrl_hw_cmn_setup_cmd_stream(struct dsi_ctrl_hw *ctrl,
 	}
 
 	/* HS Timer value */
+#ifdef CONFIG_BOARD_NUBIA
+	DSI_W32(ctrl, DSI_HS_TIMER_CTRL, 0x5FD08);
+#else
 	DSI_W32(ctrl, DSI_HS_TIMER_CTRL, 0x3FD08);
+#endif
 
 	stream_ctrl = (stride_final + 1) << 16;
 	stream_ctrl |= (vc_id & 0x3) << 8;

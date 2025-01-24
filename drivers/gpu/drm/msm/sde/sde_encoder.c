@@ -3293,8 +3293,13 @@ void sde_encoder_helper_phys_disable(struct sde_encoder_phys *phys_enc,
 	struct sde_encoder_virt *sde_enc;
 
 	if (wb_enc) {
+#ifdef CONFIG_BOARD_NUBIA
+		if (sde_encoder_helper_reset_mixers(phys_enc,
+				NULL))
+#else
 		if (sde_encoder_helper_reset_mixers(phys_enc,
 				wb_enc->fb_disable))
+#endif
 			return;
 
 		if (wb_enc->hw_wb->ops.bind_pingpong_blk) {

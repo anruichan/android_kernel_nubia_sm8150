@@ -1569,7 +1569,11 @@ static void sde_encoder_phys_wb_disable(struct sde_encoder_phys *phys_enc)
 		goto exit;
 	}
 
+#ifdef CONFIG_BOARD_NUBIA
+	if (sde_encoder_helper_reset_mixers(phys_enc, NULL))
+#else
 	if (sde_encoder_helper_reset_mixers(phys_enc, wb_enc->fb_disable))
+#endif
 		goto exit;
 
 	phys_enc->enable_state = SDE_ENC_DISABLING;

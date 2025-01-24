@@ -18,6 +18,9 @@
 #include "sde_core_irq.h"
 #include "sde_formats.h"
 #include "sde_trace.h"
+#ifdef CONFIG_BOARD_NUBIA
+#include "dsi_display.h"
+#endif
 
 #define SDE_DEBUG_CMDENC(e, fmt, ...) SDE_DEBUG("enc%d intf%d " fmt, \
 		(e) && (e)->base.parent ? \
@@ -537,6 +540,9 @@ static int _sde_encoder_phys_cmd_handle_ppdone_timeout(
 				| SDE_ENCODER_FRAME_EVENT_SIGNAL_RELEASE_FENCE;
 	struct drm_connector *conn;
 	struct sde_connector *sde_conn;
+#ifdef CONFIG_BOARD_NUBIA
+	struct dsi_display *display;
+#endif
 	int event;
 	u32 pending_kickoff_cnt;
 
@@ -545,6 +551,9 @@ static int _sde_encoder_phys_cmd_handle_ppdone_timeout(
 
 	conn = phys_enc->connector;
 	sde_conn = to_sde_connector(conn);
+#ifdef CONFIG_BOARD_NUBIA
+	display = sde_conn->display;
+#endif
 	cmd_enc->pp_timeout_report_cnt++;
 	pending_kickoff_cnt = atomic_read(&phys_enc->pending_kickoff_cnt);
 
@@ -574,11 +583,20 @@ static int _sde_encoder_phys_cmd_handle_ppdone_timeout(
 
 	/* to avoid flooding, only log first time, and "dead" time */
 	if (cmd_enc->pp_timeout_report_cnt == 1) {
+#ifdef CONFIG_BOARD_NUBIA
+		SDE_ERROR_CMDENC(cmd_enc,
+				"[%s]pp:%d kickoff timed out ctl %d koff_cnt %d\n",
+				display->name,
+				phys_enc->hw_pp->idx - PINGPONG_0,
+				phys_enc->hw_ctl->idx - CTL_0,
+				pending_kickoff_cnt);
+#else
 		SDE_ERROR_CMDENC(cmd_enc,
 				"pp:%d kickoff timed out ctl %d koff_cnt %d\n",
 				phys_enc->hw_pp->idx - PINGPONG_0,
 				phys_enc->hw_ctl->idx - CTL_0,
 				pending_kickoff_cnt);
+#endif
 
 		SDE_EVT32(DRMID(phys_enc->parent), SDE_EVTLOG_FATAL);
 		sde_encoder_helper_unregister_irq(phys_enc, INTR_IDX_RDPTR);
