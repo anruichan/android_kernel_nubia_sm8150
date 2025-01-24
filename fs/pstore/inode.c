@@ -449,7 +449,11 @@ static int pstore_fill_super(struct super_block *sb, void *data, int silent)
 
 	inode = pstore_get_inode(sb);
 	if (inode) {
+#ifdef CONFIG_BOARD_NUBIA
+		inode->i_mode = S_IFDIR | 0755;
+#else
 		inode->i_mode = S_IFDIR | 0750;
+#endif
 		inode->i_op = &pstore_dir_inode_operations;
 		inode->i_fop = &simple_dir_operations;
 		inc_nlink(inode);
