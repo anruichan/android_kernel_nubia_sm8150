@@ -22,6 +22,11 @@
 #include <linux/exportfs.h>
 #include <linux/posix_acl.h>
 #include <linux/pid_namespace.h>
+#ifdef CONFIG_BOARD_NUBIA
+// Nubia FileObserver Begin
+#include "file_observer.h"
+// Nubia FileObserver End
+#endif
 
 MODULE_AUTHOR("Miklos Szeredi <miklos@szeredi.hu>");
 MODULE_DESCRIPTION("Filesystem in Userspace");
@@ -1373,6 +1378,11 @@ static int __init fuse_init(void)
 
 	sanitize_global_limit(&max_user_bgreq);
 	sanitize_global_limit(&max_user_congthresh);
+#ifdef CONFIG_BOARD_NUBIA
+	// Nubia FileObserver Begin
+	fuse_init_file_observer();
+	// Nubia FileObserver End
+#endif
 
 	return 0;
 
@@ -1389,6 +1399,11 @@ static int __init fuse_init(void)
 static void __exit fuse_exit(void)
 {
 	printk(KERN_DEBUG "fuse exit\n");
+#ifdef CONFIG_BOARD_NUBIA
+	// Nubia FileObserver Begin
+	fuse_exit_file_observer();
+	// Nubia FileObserver End
+#endif
 
 	fuse_ctl_cleanup();
 	fuse_sysfs_cleanup();
