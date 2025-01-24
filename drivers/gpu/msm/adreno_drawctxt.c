@@ -181,10 +181,16 @@ int adreno_drawctxt_wait(struct adreno_device *adreno_dev,
 			msecs_to_jiffies(timeout));
 
 	if (ret_temp == 0) {
+#ifdef CONFIG_BOARD_NUBIA
+		pr_err("[Qcom_debug] (%s / %d) ret = -ETIMEDOUT (%d), goto done;\n", context->proc_priv->comm, context->proc_priv->pid, ret);
+#endif
 		ret = -ETIMEDOUT;
 		goto done;
 	} else if (ret_temp < 0) {
 		ret = (int) ret_temp;
+#ifdef CONFIG_BOARD_NUBIA
+		pr_err("[Qcom_debug] (%s / %d) ret = (%d), goto done;\n", context->proc_priv->comm, context->proc_priv->pid, ret);
+#endif
 		goto done;
 	}
 	ret = 0;
