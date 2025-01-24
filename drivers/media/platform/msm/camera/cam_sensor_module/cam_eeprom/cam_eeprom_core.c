@@ -20,6 +20,11 @@
 #include "cam_common_util.h"
 #include "cam_packet_util.h"
 
+#ifdef CONFIG_BOARD_NUBIA
+/* ZTEMT: songliangliang add for write CalibrationData--------Start */
+extern int32_t cam_nubia_eeprom_io_init(struct camera_io_master io_master);
+/* ZTEMT: songliangliang add for write CalibrationData---------end */
+#endif
 /**
  * cam_eeprom_read_memory() - read map data into buffer
  * @e_ctrl:     eeprom control struct
@@ -118,6 +123,14 @@ static int cam_eeprom_read_memory(struct cam_eeprom_ctrl_t *e_ctrl,
 					rc);
 				return rc;
 			}
+#ifdef CONFIG_BOARD_NUBIA
+			/* ZTEMT: fengxun add for 3D test eeprom write--------Start */
+			if (e_ctrl->io_master_info.cci_client->sid == 0x50)
+			{
+				cam_nubia_eeprom_io_init(e_ctrl->io_master_info);
+			}
+			/*ZTEMT: fengxun add for 3D test eeprom write--------End*/
+#endif
 			memptr += emap[j].mem.valid_size;
 		}
 

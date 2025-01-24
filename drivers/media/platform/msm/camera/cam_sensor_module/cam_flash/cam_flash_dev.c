@@ -16,6 +16,11 @@
 #include "cam_flash_soc.h"
 #include "cam_flash_core.h"
 #include "cam_common_util.h"
+#ifdef CONFIG_BOARD_NUBIA
+/* ZTEMT: fengxun add for --------Start */
+#include "../cam_nubia/cam_nubia_dev.h"
+/* ZTEMT: fengxun add for --------End */
+#endif
 
 static int32_t cam_flash_driver_cmd(struct cam_flash_ctrl *fctrl,
 		void *arg, struct cam_flash_private_soc *soc_private)
@@ -155,6 +160,11 @@ static int32_t cam_flash_driver_cmd(struct cam_flash_ctrl *fctrl,
 			rc = -EFAULT;
 			goto release_mutex;
 		}
+#ifdef CONFIG_BOARD_NUBIA
+		/* ZTEMT: fengxun add for flash debug--------Start */
+		nubia_flash_node_save_ctrl(fctrl);
+		/* ZTEMT: fengxun add for flash debug--------End */
+#endif
 		break;
 	}
 	case CAM_START_DEV: {
