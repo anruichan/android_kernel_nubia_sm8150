@@ -11,6 +11,9 @@
  *
  */
 
+#ifdef CONFIG_BOARD_NUBIA
+#define DEBUG
+#endif
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/slab.h>

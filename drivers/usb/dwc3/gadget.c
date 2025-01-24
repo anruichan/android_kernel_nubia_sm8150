@@ -3617,8 +3617,11 @@ static void dwc3_gadget_interrupt(struct dwc3 *dwc,
 			if (dwc->gadget.state >= USB_STATE_CONFIGURED)
 				dwc3_gadget_suspend_interrupt(dwc,
 						event->event_info);
+/* deleted to avoid usb connect sound every time switch usb composition */
+#ifndef CONFIG_BOARD_NUBIA
 			else
 				usb_gadget_vbus_draw(&dwc->gadget, 2);
+#endif
 		}
 		break;
 	case DWC3_DEVICE_EVENT_SOF:
