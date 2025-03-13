@@ -74,7 +74,7 @@
 /******* Macro definition **********/
 #define LOG(fmt, args...) printk(KERN_DEBUG "[cs_press] [%s: %d] "fmt,  __func__, __LINE__, ##args)
 
-#define FW_PATH		"/system/etc/firmware/pressure_f61.nfw"
+#define FW_PATH		"/vendor/firmware/pressure_f61.nfw"
 #define FW_PATH_1	"/data/cs_press/pressure_f61.nfw"
 
 #define READ_FW_ROM_TO_FILE "/sdcard/cs_press_fw.txt"
